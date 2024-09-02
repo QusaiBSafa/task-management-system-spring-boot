@@ -1,0 +1,61 @@
+yaml:
+  name: application.yml
+  aliases:
+    - properties.yml
+    - env.yml
+
+server:
+  port: ${APP_PORT:9090}
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    min-response-size: 1024
+  forward-headers-strategy : framework
+
+spring:
+  banner:
+    location: classpath:banner.txt
+  profiles:
+    active: ${PROFILE:local,dev}
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task-management
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    properties.hibernate.format_sql: true
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Options: none, validate, update, create, create-drop
+    hibernate.ddl-auto: update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+application:
+  configuration:
+    corsAllowedList:
+      -  http://localhost:6555
+      -  ${PORTAL_URL:http://localhost:8080}
+      -  ${API_URL:http://localhost:9090}
+    publicApiList:
+      - /api/public/**
+
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %thread ${PID} [%X{correlationId}] %-5level %logger{36} - %class{1} - %msg%n"
