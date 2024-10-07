@@ -1,4 +1,4 @@
-package com.safa.taskmanagmentsystem.service;
+package com.safa.taskmanagmentsystem.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

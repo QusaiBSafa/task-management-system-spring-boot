@@ -4,7 +4,8 @@ import com.safa.taskmanagmentsystem.entitie.dtos.AuthRequest;
 import com.safa.taskmanagmentsystem.entitie.dtos.AuthResponse;
 import com.safa.taskmanagmentsystem.exception.BadRequestException;
 import com.safa.taskmanagmentsystem.exception.ForbiddenRequestException;
-import com.safa.taskmanagmentsystem.service.AuthService;
+import com.safa.taskmanagmentsystem.service.impl.AuthService;
+import com.safa.taskmanagmentsystem.service.impl.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthRequest authRequest) {

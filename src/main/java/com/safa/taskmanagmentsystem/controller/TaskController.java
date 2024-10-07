@@ -1,15 +1,15 @@
 package com.safa.taskmanagmentsystem.controller;
 
-import com.safa.taskmanagmentsystem.service.TaskService;
-import lombok.AllArgsConstructor;
+import com.safa.taskmanagmentsystem.entitie.Task;
+import com.safa.taskmanagmentsystem.service.impl.TaskService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/tasks")
-public class TaskController {
+public class TaskController extends BaseController<Task, Long, TaskService> {
 
-    private final TaskService taskService;
-
+    public TaskController(TaskService service) {
+        super(service);
+    }
 }

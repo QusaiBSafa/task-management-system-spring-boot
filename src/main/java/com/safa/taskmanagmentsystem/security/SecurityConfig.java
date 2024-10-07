@@ -45,14 +45,14 @@ public class SecurityConfig {
         // Start configuring the request authorization
         http.authorizeHttpRequests(authorizeHttpRequest -> {
             // Public APIs from YAML config
-            if (!yamlConfig.getPublicApiList().isEmpty()) {
-                authorizeHttpRequest
-                        .requestMatchers(yamlConfig.getPublicApiList().toArray(new String[0])).permitAll();
-                LOGGER.info("Added public API: '{}' ", String.join("', '", yamlConfig.getPublicApiList()));
-            }
+//            if (!yamlConfig.getPublicApiList().isEmpty()) {
+//                authorizeHttpRequest
+//                        .requestMatchers(yamlConfig.getPublicApiList().toArray(new String[0])).permitAll();
+//                LOGGER.info("Added public API: '{}' ", String.join("', '", yamlConfig.getPublicApiList()));
+//            }
             // Common endpoints
             authorizeHttpRequest
-                    .requestMatchers("/actuator/health", "/actuator/metrics", "/actuator/metrics/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/monitor/**", "/api/authentication/**").permitAll()
+                    .requestMatchers("/auth/token/refresh","/auth/login", "/users/register", "/actuator/health", "/actuator/metrics", "/actuator/metrics/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/monitor/**", "/api/authentication/**").permitAll()
                     .anyRequest().authenticated();  // All other requests need to be authenticated
         });
 

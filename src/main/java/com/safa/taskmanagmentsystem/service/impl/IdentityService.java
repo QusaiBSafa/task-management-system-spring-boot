@@ -1,5 +1,6 @@
-package com.safa.taskmanagmentsystem.entitie;
+package com.safa.taskmanagmentsystem.service.impl;
 
+import com.safa.taskmanagmentsystem.entitie.User;
 import com.safa.taskmanagmentsystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;

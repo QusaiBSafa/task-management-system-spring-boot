@@ -54,7 +54,8 @@ application:
       -  ${PORTAL_URL:http://localhost:8080}
       -  ${API_URL:http://localhost:9090}
     publicApiList:
-      - /api/public/**
+      - /public/**
+      - /users/register
 
 logging:
   pattern:

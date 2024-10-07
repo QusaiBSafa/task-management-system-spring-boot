@@ -1,5 +1,6 @@
 package com.safa.taskmanagmentsystem.entitie;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -23,7 +24,7 @@ public class User extends BaseEntity implements UserDetails {
 
     private String fullName;
 
-    @Column(name = "password", nullable = false, length = 16)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Size(min = 4, max = 255)
@@ -37,12 +38,15 @@ public class User extends BaseEntity implements UserDetails {
     private String roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Task> tasks;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Project> projects;
 
     @Transient // Should not be persisted in the database.
+    @JsonIgnore
     private Collection<String> roleCollection = new ArrayList<>();
 
     public User(User user) {

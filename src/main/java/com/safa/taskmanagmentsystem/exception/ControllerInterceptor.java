@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +25,11 @@ public class ControllerInterceptor {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    protected ResponseEntity badRequestException(BadRequestException e) {
-        return ResponseEntity
-                .badRequest()
-                .body(createError(e, e.getValue()));
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<?> badRequestException(BadRequestException e) {
+        return  ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(createError(e, e.getMessage(), HttpStatus.BAD_REQUEST.value()));
     }
 
     @ExceptionHandler(ForbiddenRequestException.class)
@@ -56,16 +58,16 @@ public class ControllerInterceptor {
 
         return ResponseEntity
                 .badRequest()
-                .body(createError(e, errors));
+                .body(createError(e, String.join(",", errors)));
     }
 
 
 
-    private BaseErrorModel createError(Exception exception, Object errorMessage) {
+    private BaseErrorModel createError(Exception exception, String errorMessage) {
         return createError(exception, errorMessage, HttpStatus.BAD_REQUEST.value());
     }
 
-    private BaseErrorModel createError(Exception exception, Object errorMessage, Integer status) {
+    private BaseErrorModel createError(Exception exception, String errorMessage, Integer status) {
         LOGGER.error("Error {} with message : {}", exception.getClass().getSimpleName(), errorMessage);
         return new BaseErrorModel(status, errorMessage, request.getContextPath() + request.getServletPath());
     }

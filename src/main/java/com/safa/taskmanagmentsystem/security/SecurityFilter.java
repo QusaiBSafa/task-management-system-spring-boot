@@ -32,9 +32,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/api/authentication/login") || request.getServletPath().equals("/api/authentication/token/refresh")) {
-            filterChain.doFilter(request, response);
-        } else {
+
             String authorizationHeader = request.getHeader(AUTHORIZATION);
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 try {
@@ -67,7 +65,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 }
             } else {
                 filterChain.doFilter(request, response);
-            }
         }
     }
 }

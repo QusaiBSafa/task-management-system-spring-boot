@@ -1,4 +1,4 @@
-package com.safa.taskmanagmentsystem.service;
+package com.safa.taskmanagmentsystem.service.impl;
 
 import com.safa.taskmanagmentsystem.entitie.Task;
 import com.safa.taskmanagmentsystem.repository.TaskRepository;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TaskService extends BaseService<Task, TaskRepository>{
+public class TaskService extends BaseService<Task, Long, TaskRepository> {
 
     public TaskService(TaskRepository repository) {
         super(repository);
